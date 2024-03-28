@@ -12,14 +12,25 @@ function init() {
 async function sendRequest() {
     // On récupère la valeur du prompt
     const inputElement = document.querySelector('input');
+// On récupère les valeurs des sliders
+    const temperatureSlider = document.querySelector('#temperature');
+    const maxTokensSlider = document.querySelector('#maxTokens');
+    const temperature = temperatureSlider.value;
+    const maxTokens = maxTokensSlider.value;
 
     const prompt = inputElement.value;
     // si le prompt est vide on quitte la fonction
     if (prompt === '') return;
+    if (temperature === '') return;
+    if (maxTokens === '') return;
 
     // On envoie le contenu du prompt dans un FormData (eq. formulaires multipart)
     const promptData = new FormData();
     promptData.append('prompt', prompt);
+    // On envoie les valeurs des sliders dans le FormData
+    promptData.append('temperature', temperature);
+    promptData.append('maxTokens', maxTokens);
+
 
     // Envoi de la requête POST par fetch, avec le FormData dans la propriété body
     // côté serveur on récupèrera dans req.body.prompt la valeur du prompt,
